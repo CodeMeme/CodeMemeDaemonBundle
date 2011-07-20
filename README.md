@@ -109,3 +109,12 @@ The Following links are examples of how to use a system daemon in an example pro
   [8]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStartCommand.php
   [9]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStopCommand.php
   [10]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleRestartCommand.php
+  
+##Usage##
+Once you have Daemonized your symfony Console Commands, you can simply run them from the command line like so:
+
+    jesse@picard:~/codememe$ sudo php app/console jobqueue:start
+
+    jesse@picard:~/codememe$ sudo php app/console jobqueue:stop
+
+    jesse@picard:~/codememe$ sudo php app/console jobqueue:restart
