@@ -1,0 +1,17 @@
+#CodeMemeDaemonBundle Configuration Example
+code_meme_daemon:
+    daemons:
+        example:
+            appName: example
+            appDir: %kernel.root_dir%
+            appDescription: Example of how to configure the DaemonBundle
+            logLocation: %kernel.logs_dir%/%kernel.environment%.example.log
+            authorName: Jesse Greathouse
+            authorEmail: jesse.greathouse@gmail.com
+            appPidLocation: %kernel.cache_dir%/example/example.pid
+            sysMaxExecutionTime: 0
+            sysMaxInputTime: 0
+            sysMemoryLimit: 1024M
+            appRunAsGID: 1
+            appRunAsUID: 1
+        minimal: ~
