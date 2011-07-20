@@ -81,7 +81,14 @@ By Default, system daemons have a sensible configuration. If you need to change 
                 sysMemoryLimit: 1024M
                 appRunAsGID: 1
                 appRunAsUID: 1
-    
+
+#### security concern with default user and group RunAs ####
+it is highly recommended to set the appRunAsGID and /or appRunAsUID options as this can cause troublesome problems with permissions on your server. The default is 1 for both and from system to system this may be root or it may be a different user. To make sure files are set to the correct permissions level, it is best to set these values to the UID and GID of the webserver or application user.
+
+To find out the group and user id of a specific user you can use the following commands.
+
+    jesse@picard:~/ninethousand.org$ id -u www-data
+    jesse@picard:~/ninethousand.org$ id -g www-data
 
 ##Creating a Daemon##
 The Following links are examples of how to use a system daemon in an example project
