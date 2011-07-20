@@ -30,7 +30,7 @@ More info at:
 Place CodeMeme\Daemonbundle in your src directory and do the following:
 
 ### Deps ###
-add the bundle and jobqueue component to your deps configuration
+add the bundle to your deps configuration
 
     [CodeMemeDaemonBundle]
         git=http://github.com/CodeMeme/CodeMemeDaemonBundle.git
@@ -45,7 +45,7 @@ Add the following to your autoload.php file:
     ));
 
 ### appKernel.php ###
-Add The Jobqueue bundle to your kernel bootstrap sequence
+Add The CodeMemeDaemonBundle to your kernel bootstrap sequence
 
     public function registerBundles()
     {
@@ -66,7 +66,10 @@ By Default, system daemons have a sensible configuration. If you need to change 
     #CodeMemeDaemonBundle Configuration Example
     code_meme_daemon:
         daemons:
-            example: ~
+            example:
+                appRunAsGID: 33
+                appRunAsUID: 33
+
             #an example of all the available options
             explicitexample:
                 appName: example
