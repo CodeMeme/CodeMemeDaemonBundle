@@ -7,9 +7,13 @@
     <parameters>
         <parameter key="codememe.daemon.filesystem.class">Symfony\Component\HttpKernel\Util\Filesystem</parameter>
         <parameter key="codememe.daemon.class">CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon</parameter>
+        <parameter key="example.control.class">CodeMeme\Bundle\CodeMemeDaemonBundle\Service\ExampleControl.php</parameter>
     </parameters>
 
     <services>
+        <service id="example.control" class="%example.control.class%" >
+             <argument type="service" id="logger" />
+        </service>
         <service id="codememe.daemon.filesystem" class="%codememe.daemon.filesystem.class%" />
     </services>
 </container>

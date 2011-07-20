@@ -41,7 +41,7 @@ Add the following to your autoload.php file:
 
     $loader->registerNamespaces(array(
         //...
-        'CodeMeme'     => array(__DIR__.'/../vendor/bundles'),
+        'CodeMeme'     => __DIR__.'/../vendor/bundles',
     ));
 
 ### appKernel.php ###
@@ -94,8 +94,8 @@ The Following links are examples of how to use a system daemon in an example pro
 - [Control Service DiC][7]
 
   [5]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Service/ExampleControl.php
-  [6]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Resources/config/services.xml
+  [6]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Resources/config/daemon.xml
   [7]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/DependencyInjection/ExampleExtension.php
-  [8]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/StartCommand.php
-  [9]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/StopCommand.php
-  [10]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/RestartCommand.php
+  [8]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStartCommand.php
+  [9]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStopCommand.php
+  [10]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleRestartCommand.php
