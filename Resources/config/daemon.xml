@@ -7,7 +7,7 @@
     <parameters>
         <parameter key="codememe.daemon.filesystem.class">Symfony\Component\HttpKernel\Util\Filesystem</parameter>
         <parameter key="codememe.daemon.class">CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon</parameter>
-        <parameter key="example.control.class">CodeMeme\Bundle\CodeMemeDaemonBundle\Service\ExampleControl.php</parameter>
+        <parameter key="example.control.class">CodeMeme\Bundle\CodeMemeDaemonBundle\Service\ExampleControl</parameter>
     </parameters>
 
     <services>
