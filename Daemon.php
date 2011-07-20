@@ -15,7 +15,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle;
  * @link      https://github.com/CodeMeme/CodeMemeDaemonBundle
  */
 
-use CodeMeme\Bundle\DaemonBundle\System\Daemon as System_Daemon;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon as System_Daemon;
 
 class Daemon
 {
@@ -24,11 +24,11 @@ class Daemon
     private $_pid;
     private $_interval = 2;
     
-    public function __construct($config = array()) 
+    public function __construct($options) 
     {
-        if (!empty($config))
+        if (!empty($options))
         {
-            $this->setConfig($config);
+            $this->setConfig($options);
         }   
     }
     
@@ -99,9 +99,15 @@ class Daemon
     
     public function stop()
     {
-        unlink($this->_config['appPidLocation']);
-        System_Daemon::info('{appName} System Daemon Terminated at %s',
-            date("F j, Y, g:i a")
-        );
+        if (file_exists($this->_config['appPidLocation'])) {
+            unlink($this->_config['appPidLocation']);
+            System_Daemon::info('{appName} System Daemon Terminated at %s',
+                date("F j, Y, g:i a")
+            );
+        } else {
+            System_Daemon::info('{appName} System Daemon is not running. Could not terminate at %s',
+                date("F j, Y, g:i a")
+            );
+        }
     }
 }

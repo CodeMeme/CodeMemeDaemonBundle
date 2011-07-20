@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon;
+namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon;
 
 /* vim: set noai expandtab tabstop=4 softtabstop=4 shiftwidth=4: */
 /**

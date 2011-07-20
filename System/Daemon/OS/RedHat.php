@@ -31,7 +31,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
  * *
  */
 
-use CodeMeme\DaemonBundle\System\Daemon\OS\Linux; 
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS\Linux; 
 
 class RedHat extends Linux
 {

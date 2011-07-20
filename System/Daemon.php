@@ -37,9 +37,9 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System;
  *
  */
  
-use CodeMeme\DaemonBundle\System\Daemon\Exception;
-use CodeMeme\DaemonBundle\System\Daemon\Options;
-use CodeMeme\DaemonBundle\System\Daemon\OS;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\Exception;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\Options;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
  
 class Daemon
 {

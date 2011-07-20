@@ -18,14 +18,15 @@ class ExampleStopCommand extends ContainerAwareCommand
         $this->setName('example:stop')
              ->setDescription('Stops the example daemon')
              ->setHelp(<<<EOT
-The <info>{$this->getName()}</info> Stop the example daemon from running in the background.
+The <info>{$this->getName()}</info> Stop the Example daemon from running in the background.
 EOT
         );
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->container->get('example.daemon')->stop();
+        $daemon = new Daemon($this->getContainer()->getParameter('example.daemon.options'));
+        $daemon->stop();
     }
 
 }

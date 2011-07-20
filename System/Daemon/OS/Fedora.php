@@ -31,7 +31,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
  * *
  */
 
-use CodeMeme\DaemonBundle\System\Daemon\OS\RedHat;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS\RedHat;
 
 class Fedora extends RedHat
 {

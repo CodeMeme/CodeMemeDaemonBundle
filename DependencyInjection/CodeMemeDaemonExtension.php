@@ -42,16 +42,16 @@ class CodeMemeDaemonExtension extends Extension
         return $mergedConfig;
     }
     
-    private function getDefaultConfig($name)
+    private function getDefaultConfig($name, $container)
     {
         return array(
             'appName'               => $name,
-            'appDir'                => '%kernel.root_dir',
+            'appDir'                => $container->getParameter('kernel.root_dir'),
             'appDescription'        => 'CodeMeme System Daemon',
-            'logLocation'           => '%kernel.logs_dir%/%kernel.environment%.' . $name . '.daemon.log',
+            'logLocation'           => $container->getParameter('kernel.logs_dir') . '/' . $container->getParameter('kernel.environment'). '.' . $name . '.daemon.log',
             'authorName'            => 'CodeMeme',
             'authorEmail'           => 'symfony2.kernel@127.0.0.1',
-            'appPidLocation'        => '%kernel.cache_dir%/'. $name . '/' . $name . '.daemon.pid',
+            'appPidLocation'        => $container->getParameter('kernel.cache_dir') . '/'. $name . '/' . $name . '.daemon.pid',
             'sysMaxExecutionTime'   => 0,
             'sysMaxInputTime'       => 0,
             'sysMemoryLimit'        => '1024M',
@@ -75,11 +75,7 @@ class CodeMemeDaemonExtension extends Extension
             }
             
             $container->setParameter($name.'.daemon.options', 
-                                     array_merge($this->getDefaultConfig($name), $cnf));
-                                     
-            $container->setDefinition($name.'.daemon', new Definition(
-                $container->getParameter('codememe.daemon.class'),
-                $container->getParameter($name.'.daemon.options')));
+                                     array_merge($this->getDefaultConfig($name, $container), $cnf));
         }
         
     }

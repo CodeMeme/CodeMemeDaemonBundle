@@ -30,7 +30,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
  * * 
  */
  
-use CodeMeme\DaemonBundle\System\Daemon\OS;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
 
 class Linux extends OS
 {

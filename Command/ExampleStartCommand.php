@@ -8,6 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 
+use CodeMeme\Bundle\CodeMemeDaemonBundle\Daemon;
+
 class ExampleStartCommand extends ContainerAwareCommand
 {
     
@@ -23,12 +25,11 @@ EOT
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-    
-        $this->container->get('example.daemon');
+        $daemon = new Daemon($this->getContainer()->getParameter('example.daemon.options'));
         $daemon->start();
         
         while ($daemon->isRunning()) {
-            $this->container->get('example.control')->run();
+            $this->getContainer()->get('example.control')->run();
         }
         
         $daemon->stop();

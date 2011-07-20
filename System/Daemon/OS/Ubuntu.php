@@ -30,7 +30,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS;
  * * 
  */
 
-use CodeMeme\DaemonBundle\System\Daemon\OS\Debian; 
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\OS\Debian; 
 
 class Ubuntu extends Debian
 {
