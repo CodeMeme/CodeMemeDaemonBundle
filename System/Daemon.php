@@ -291,6 +291,14 @@ class Daemon
             'detail' => 'Defaults to root which is insecure!',
             'required' => true,
         ),
+        'appUser' => array(
+            'type' => 'string',
+            'default' => 'root',
+            'punch' => 'The user name under which to run the process',
+            'example' => 'www-data',
+            'detail' => 'Defaults to root which is insecure!',
+            'required' => false,
+        ),
         'appRunAsGID' => array(
             'type' => 'number/0-65000',
             'default' => 0,
@@ -298,6 +306,14 @@ class Daemon
             'example' => '1000',
             'detail' => 'Defaults to root which is insecure!',
             'required' => true,
+        ),
+        'appGroup' => array(
+            'type' => 'string',
+            'default' => 'root',
+            'punch' => 'The group name under which to run the process',
+            'example' => 'www-data',
+            'detail' => 'Defaults to root which is insecure!',
+            'required' => false,
         ),
         'appPidLocation' => array(
             'type' => 'string/unix_filepath',

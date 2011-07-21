@@ -44,7 +44,7 @@ class CodeMemeDaemonExtension extends Extension
     
     private function getDefaultConfig($name, $container)
     {
-        return array(
+        $defaults = array(
             'appName'               => $name,
             'appDir'                => $container->getParameter('kernel.root_dir'),
             'appDescription'        => 'CodeMeme System Daemon',
@@ -54,9 +54,13 @@ class CodeMemeDaemonExtension extends Extension
             'appPidLocation'        => $container->getParameter('kernel.cache_dir') . '/'. $name . '/' . $name . '.daemon.pid',
             'sysMaxExecutionTime'   => 0,
             'sysMaxInputTime'       => 0,
-            'sysMemoryLimit'        => '1024M',
-            'appRunAsGID'           => 1,
-            'appRunAsUID'           => 1);
+            'sysMemoryLimit'        => '1024M');
+            
+            if (function_exists('posix_geteuid')) {
+                $defaults['appRunAsUID'] = posix_geteuid();
+            }
+            
+            return $defaults;
     }
     
     private function _init($config, $container)
@@ -72,6 +76,22 @@ class CodeMemeDaemonExtension extends Extension
                 $filesystem->mkdir($cacheDir . '/'. $name . '/', 0777);
             } catch (CodeMemeDaemonBundleException $e) {
                 echo 'CodeMemeDaemonBundle exception: ',  $e->getMessage(), "\n";
+            }
+            
+            if (isset($cnf['appUser']) || isset($cnf['appGroup'])) {
+                if (isset($cnf['appUser']) && (function_exists('posix_getpwnam'))) {
+                    $user  = posix_getpwnam($cnf['appUser']);
+                    if ($user) {
+                        $cnf['appRunAsUID'] = $user['uid'];
+                    }
+                }
+                
+                if (isset($cnf['appGroup']) && (function_exists('posix_getgrnam'))) {
+                    $group = posix_getgrnam($cnf['appGroup']);
+                    if ($group) {
+                        $cnf['appRunAsGID'] = $group['gid'];
+                    }
+                }
             }
             
             $container->setParameter($name.'.daemon.options', 

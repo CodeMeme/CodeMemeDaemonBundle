@@ -16,6 +16,7 @@ namespace CodeMeme\Bundle\CodeMemeDaemonBundle;
  */
 
 use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon as System_Daemon;
+use CodeMeme\Bundle\CodeMemeDaemonBundle\System\Daemon\Exception as CodeMemeDaemonBundleException;
 
 class Daemon
 {
@@ -26,10 +27,29 @@ class Daemon
     
     public function __construct($options) 
     {
-        if (!empty($options))
-        {
+        if (!empty($options)) {
+            $options = $this->validateOptions($options);
             $this->setConfig($options);
-        }   
+        } else {
+            throw new CodeMemeDaemonBundleException('Daemon instantiated without a config');
+        }
+    }
+    
+    private function validateOptions($options)
+    {
+        if (!isset($options['appRunAsUID'])) {
+            throw new CodeMemeDaemonBundleException('Daemon instantiated without user or group');
+        }
+            
+        if (!isset($options['appRunAsGID'])) {
+            try {
+                $options['appRunAsGID'] = posix_getegid();
+            } catch (CodeMemeDaemonBundleException $e) {
+                echo 'Exception caught: ',  $e->getMessage(), "\n";
+            }
+        }
+        
+        return $options;
     }
     
     public function setConfig($config)
@@ -101,13 +121,9 @@ class Daemon
     {
         if (file_exists($this->_config['appPidLocation'])) {
             unlink($this->_config['appPidLocation']);
-            System_Daemon::info('{appName} System Daemon Terminated at %s',
-                date("F j, Y, g:i a")
-            );
-        } else {
-            System_Daemon::info('{appName} System Daemon is not running. Could not terminate at %s',
-                date("F j, Y, g:i a")
-            );
         }
+        System_Daemon::info('{appName} System Daemon Terminated at %s',
+            date("F j, Y, g:i a")
+        );
     }
 }

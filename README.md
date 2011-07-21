@@ -66,9 +66,8 @@ By Default, system daemons have a sensible configuration. If you need to change 
     #CodeMemeDaemonBundle Configuration Example
     code_meme_daemon:
         daemons:
-            example:
-                appRunAsGID: 33
-                appRunAsUID: 33
+            #creates a daemon using default options
+            example: ~
 
             #an example of all the available options
             explicitexample:
@@ -82,11 +81,13 @@ By Default, system daemons have a sensible configuration. If you need to change 
                 sysMaxExecutionTime: 0
                 sysMaxInputTime: 0
                 sysMemoryLimit: 1024M
-                appRunAsGID: 1
-                appRunAsUID: 1
+                appUser: apache
+                appGroup: apache
+                appRunAsGID: 1000
+                appRunAsUID: 1000
 
-#### security concern with default user and group RunAs ####
-it is highly recommended to set the appRunAsGID and /or appRunAsUID options as this can cause troublesome problems with permissions on your server. The default is 1 for both and from system to system this may be root or it may be a different user. To make sure files are set to the correct permissions level, it is best to set these values to the UID and GID of the webserver or application user.
+#### RunAs ####
+You can run the daemon as a different user or group depending on what is best for your application. By default it will resolve the user and group of the user who is running the daemon from the command console, but if you want to run as a different user you can use the appUser, appGroup or appRunAsGID, appRunAsUID options. Remember if you need to run as a different user you must start the daemon as sudo or a superuser.
 
 To find out the group and user id of a specific user you can use the following commands.
 
@@ -101,11 +102,9 @@ The Following links are examples of how to use a system daemon in an example pro
 - [Restart Command][10]
 - [Example Service Class][5]
 - [Config of Control Service][6]
-- [Control Service DiC][7]
 
   [5]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Service/ExampleControl.php
   [6]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Resources/config/daemon.xml
-  [7]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/DependencyInjection/ExampleExtension.php
   [8]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStartCommand.php
   [9]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleStopCommand.php
   [10]: https://github.com/CodeMeme/CodeMemeDaemonBundle/blob/master/Command/ExampleRestartCommand.php
@@ -113,8 +112,8 @@ The Following links are examples of how to use a system daemon in an example pro
 ##Usage##
 Once you have Daemonized your symfony Console Commands, you can simply run them from the command line like so:
 
-    jesse@picard:~/codememe$ sudo php app/console jobqueue:start
+    jesse@picard:~/codememe$ php app/console jobqueue:start
 
-    jesse@picard:~/codememe$ sudo php app/console jobqueue:stop
+    jesse@picard:~/codememe$ php app/console jobqueue:stop
 
-    jesse@picard:~/codememe$ sudo php app/console jobqueue:restart
+    jesse@picard:~/codememe$ php app/console jobqueue:restart
