@@ -17,6 +17,8 @@ use CodeMeme\Bundle\CodeMemeDaemonBundle\CodeMemeDaemonBundleException;
  */
 class CodeMemeDaemonExtension extends Extension
 {
+    private $defaultUser = null;
+
     public function load(array $configs, ContainerBuilder $container)
     {
         $processor = new Processor();
@@ -44,6 +46,10 @@ class CodeMemeDaemonExtension extends Extension
     
     private function getDefaultConfig($name, $container)
     {
+        if (null === $this->defaultUser && function_exists('posix_geteuid')) {
+                $this->defaultUser = posix_geteuid();
+        }   
+        
         $defaults = array(
             'appName'               => $name,
             'appDir'                => $container->getParameter('kernel.root_dir'),
@@ -54,11 +60,9 @@ class CodeMemeDaemonExtension extends Extension
             'appPidLocation'        => $container->getParameter('kernel.cache_dir') . '/'. $name . '/' . $name . '.daemon.pid',
             'sysMaxExecutionTime'   => 0,
             'sysMaxInputTime'       => 0,
-            'sysMemoryLimit'        => '1024M');
-            
-            if (function_exists('posix_geteuid')) {
-                $defaults['appRunAsUID'] = posix_geteuid();
-            }
+            'sysMemoryLimit'        => '1024M',
+            'appRunAsUID'           => $this->defaultUser
+            );
             
             return $defaults;
     }
@@ -91,6 +95,11 @@ class CodeMemeDaemonExtension extends Extension
                     if ($group) {
                         $cnf['appRunAsGID'] = $group['gid'];
                     }
+                }
+                
+                if (!isset($cnf['appRunAsGID'])) {
+                    $user = posix_getpwuid($cnf['appRunAsUID']);
+                    $cnf['appRunAsGID'] = $user['gid'];
                 }
             }
             

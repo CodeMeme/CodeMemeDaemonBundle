@@ -37,13 +37,14 @@ class Daemon
     
     private function validateOptions($options)
     {
-        if (!isset($options['appRunAsUID'])) {
+        if (null === ($options['appRunAsUID'])) {
             throw new CodeMemeDaemonBundleException('Daemon instantiated without user or group');
         }
             
         if (!isset($options['appRunAsGID'])) {
             try {
-                $options['appRunAsGID'] = posix_getegid();
+                $user = posix_getpwuid($options['appRunAsUID']);
+                $options['appRunAsGID'] = $user['gid'];
             } catch (CodeMemeDaemonBundleException $e) {
                 echo 'Exception caught: ',  $e->getMessage(), "\n";
             }
@@ -99,7 +100,29 @@ class Daemon
             date("F j, Y, g:i a")
         );
         
-        $this->setPid($this->getPid()); 
+        $this->setPid($this->getPid());
+        
+    }
+    
+    public function reStart()
+    {
+        $pid = $this->getPid();
+        System_Daemon::info('{appName} System Daemon flagged for restart at %s',
+            date("F j, Y, g:i a")
+        );
+        $this->stop();
+        exec("ps ax | awk '{print $1}'", $pids);
+        while(in_array($pid, $pids, true)) {
+            unset($pids);
+            exec("ps ax | awk '{print $1}'", $pids);
+            $this->iterate(5);
+        }
+        System_Daemon::info('{appName} System Daemon Started at %s',
+            date("F j, Y, g:i a")
+        );
+        
+        $this->start();
+        
         
     }
     
@@ -121,9 +144,13 @@ class Daemon
     {
         if (file_exists($this->_config['appPidLocation'])) {
             unlink($this->_config['appPidLocation']);
+            System_Daemon::info('{appName} System Daemon Terminated at %s',
+                date("F j, Y, g:i a")
+            );
+        } else {
+            System_Daemon::info('{appName} System Daemon Stop flag sent at %s',
+                date("F j, Y, g:i a")
+            );
         }
-        System_Daemon::info('{appName} System Daemon Terminated at %s',
-            date("F j, Y, g:i a")
-        );
     }
 }
