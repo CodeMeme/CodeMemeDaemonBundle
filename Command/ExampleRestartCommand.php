@@ -26,10 +26,8 @@ EOT
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $daemon = new Daemon($this->getContainer()->getParameter('example.daemon.options'));
-        $daemon->stop();
 
-        $daemon->iterate(5);
-        $daemon->start();
+        $daemon->reStart();
         
         while ($daemon->isRunning()) {
             $this->getContainer()->get('example.control')->run();
