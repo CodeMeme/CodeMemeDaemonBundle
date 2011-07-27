@@ -54,7 +54,7 @@ class CodeMemeDaemonExtension extends Extension
             'appName'               => $name,
             'appDir'                => $container->getParameter('kernel.root_dir'),
             'appDescription'        => 'CodeMeme System Daemon',
-            'logLocation'           => $container->getParameter('kernel.logs_dir') . '/' . $container->getParameter('kernel.environment'). '.' . $name . '.daemon.log',
+            'logLocation'           => $container->getParameter('kernel.cache_dir') . '/'. $name . '/' . $container->getParameter('kernel.environment'). '.' . $name . '.daemon.log',
             'authorName'            => 'CodeMeme',
             'authorEmail'           => 'symfony2.kernel@127.0.0.1',
             'appPidLocation'        => $container->getParameter('kernel.cache_dir') . '/'. $name . '/' . $name . '.daemon.pid',

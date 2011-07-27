@@ -1310,14 +1310,16 @@ class Daemon
         }
 
         // Change identity. maybe
-        $c = self::_changeIdentity(
-            self::opt('appRunAsGID'),
-            self::opt('appRunAsUID')
-        );
-        if (false === $c) {
-            self::crit('Unable to change identity');
-            if (self::opt('appDieOnIdentityCrisis')) {
-                self::emerg('Cannot continue after this');
+        if (0 === exec("id -u")) {
+            $c = self::_changeIdentity(
+                self::opt('appRunAsGID'),
+                self::opt('appRunAsUID')
+                );
+            if (false === $c) {
+                self::crit('Unable to change identity');
+                if (self::opt('appDieOnIdentityCrisis')) {
+                    self::emerg('Cannot continue after this');
+                }
             }
         }
 
