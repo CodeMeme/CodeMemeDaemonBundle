@@ -1,6 +1,6 @@
 <?php
 
-namespace CodeMeme\Bundle\CodeMemeDaemonBundle;
+namespace CodeMeme\Bundle\CodeMemeDaemonBundle\Service;
 
 class ExampleControl
 {  
