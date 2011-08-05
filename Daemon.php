@@ -133,7 +133,6 @@ class Daemon
     
     public function isRunning() 
     {
-        System_Daemon::setOptions($this->getConfig());
         if (!System_Daemon::isDying() && $this->_pid != null && $this->_pid == $this->getPid()) {
             System_Daemon::iterate($this->_interval);
             return true;
